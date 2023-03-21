@@ -1,0 +1,25 @@
+version: '3.9'
+
+volumes:
+  mongo-data:
+
+
+services:
+  server-app:
+    image: photome_server_temp:dev
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    restart: on-failure
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: s3cret
